@@ -2,7 +2,9 @@
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
+using VkNet;
 using VkNet.Abstractions;
+using VkNet.Enums.Filters;
 using VkNet.Model;
 using VkNet.Utils;
 
@@ -22,12 +24,19 @@ namespace VkBot.Controllers
         {
             _configuration = configuration;
             _random = new Random();
+            _vkApi = new VkApi();
+            _vkApi.Authorize(new ApiAuthParams()
+            {
+                AccessToken = _configuration["Config:AccessToken"],
+                Settings = Settings.All,
+            });
         }
 
 
         [HttpPost]
         public IActionResult Callback([FromBody] Updates updates)
         {
+            
             // Тип события
             switch (updates.Type)
             {
