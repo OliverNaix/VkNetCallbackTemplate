@@ -18,9 +18,8 @@ namespace VkBot.Controllers
         private readonly IConfiguration _configuration;
         private readonly IVkApi _vkApi;
         private readonly Random _random;
-        public CallbackController(IVkApi vkApi, IConfiguration configuration)
+        public CallbackController(IConfiguration configuration)
         {
-            _vkApi = vkApi;
             _configuration = configuration;
             _random = new Random();
         }
