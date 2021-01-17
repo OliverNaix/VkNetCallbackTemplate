@@ -28,9 +28,8 @@ namespace VkBot.Messages
 
         public static string[] Order = new string[]
             {
-                "уникальный",
-                "сделай",
-                "заказать"
+                "заказать",
+                "сделать"
             };
 
         public static string[] Buy = new string[]
@@ -63,6 +62,22 @@ namespace VkBot.Messages
                 {
                     Bot.Send(message.PeerId.Value, "Для покупки ты можешь обратиться к самому автору битов - https://vk.com/lefiee\n\n" +
                        "Или же ты можешь написать менеджеру проекта - https://vk.com/fuck_your_m0ther\n\n");
+
+                    answered = true;
+                }
+            }
+
+            foreach (var i in Trigger.Order)
+            {
+                if (message.Text.ToLower().Contains(i))
+                {
+                    Bot.Send(message.PeerId.Value, "Если ты хочешь заказать бит, то, пожалуйста, опиши каким ты хочешь его услышать." +
+                        "\n\nПример:\n\n" +
+                        "Жанр: Rap\n" +
+                        "BPM: 140\n" +
+                        "Интсрументал: пианино, флейта\n" +
+                        "и т.д\n\n" +
+                        "Как битмейкер приступит к работе я тебя обязательно оповещу.");
 
                     answered = true;
                 }
