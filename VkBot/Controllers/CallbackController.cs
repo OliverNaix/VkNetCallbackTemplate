@@ -2,6 +2,8 @@
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
+using VkBot.Commands;
+using VkBot.Messages;
 using VkNet;
 using VkNet.Abstractions;
 using VkNet.Enums.Filters;
@@ -25,11 +27,14 @@ namespace VkBot.Controllers
             _configuration = configuration;
             _random = new Random();
             _vkApi = new VkApi();
+
             _vkApi.Authorize(new ApiAuthParams()
             {
                 AccessToken = _configuration["Config:AccessToken"],
                 Settings = Settings.All,
             });
+
+            Bot.VkApi = _vkApi;
         }
 
 
@@ -50,15 +55,10 @@ namespace VkBot.Controllers
                 case "message_new":
                 {
                     // Десериализация
-                    var msg = Message.FromJson(new VkResponse(updates.Object));
+                    Message msg = Message.FromJson(new VkResponse(updates.Object));
 
-
-                        _vkApi.Messages.Send(new VkNet.Model.RequestParams.MessagesSendParams()
-                        {
-                            RandomId = _random.Next(int.MinValue, int.MaxValue),
-                            PeerId = msg.PeerId.Value,
-                            Message = "Отъебись"
-                        });
+                    MessageResponser message = new MessageResponser(msg);
+                       
                     break;
                 }
             }
