@@ -7,15 +7,51 @@ using VkNet.Model;
 
 namespace VkBot.Messages
 {
+    public class Trigger
+    {
+        public static List<string[]> Triggers = new List<string[]>()
+            {
+                Hello,
+                Buy
+            };
+
+        public static string[] Hello = new string[]
+            {
+            "привет",
+            "салют",
+            "шалом",
+            "здарова",
+            "дороу",
+            "здравствуйте",
+            };
+
+        public static string[] Buy = new string[]
+            {
+                "купить",
+                "приобрести",
+                "использовать"
+            };
+    }
     public class MessageResponser
     {
         public MessageResponser(Message message)
         {
-            if (message.Text.Contains("Привет"))
+            foreach (var i in Trigger.Hello)
             {
-                Bot.Send(message.PeerId.Value, "Салют, братишка!\n\n" +
-                    "Хочешь купить биточек? Ты обратился по адресу!\n\n" +
-                    "Для покупки просто отправь название биточка, который хочешь приобрести!");
+                if (message.Text.ToLower().Contains(i))
+                {
+                    Bot.Send(message.PeerId.Value, "Салют, братишка!\n\n" +
+                       "Чем могу помочь?");
+                }
+            }
+
+            foreach (var i in Trigger.Buy)
+            {
+                if (message.Text.ToLower().Contains(i))
+                {
+                    Bot.Send(message.PeerId.Value, "Для покупки ты можешь обратиться к самому автору битов - https://vk.com/lefiee\n\n" +
+                       "Или же ты можешь написать менеджеру проекта - https://vk.com/fuck_your_m0ther\n\n");
+                }
             }
         }
     }
